@@ -42,12 +42,12 @@ func main() {
 
 	log.Printf("LOOKUP_HOST set to %s", lookupHost)
 
-	var clientConfig torrent.Config
+	var clientConfig torrent.ClientConfig
 	clientConfig.DataDir = dataDir
 	clientConfig.Seed = true
 	clientConfig.DisableTrackers = true
 	clientConfig.NoDHT = true
-	clientConfig.ListenAddr = "0.0.0.0:6000"
+	clientConfig.ListenPort = 6000
 	var err error
 	torrentClient, err = torrent.NewClient(&clientConfig)
 	if err != nil {
@@ -105,22 +105,25 @@ func statsHandler(w http.ResponseWriter, r *http.Request) {
 
 func getPeers() {
 
-	ips, err := net.LookupIP(lookupHost)
+	//ips, err := net.LookupIP(lookupHost)
 
-	if err != nil {
-		log.Printf("Error looking up hosts")
-		return
-	}
+	ips := []string{"10.99.204.17", "10.99.204.176", "10.100.67.248", "10.100.67.249", "10.100.65.155",
+	"10.100.65.156", "10.100.67.160", "10.100.56.143", "10.100.56.144"}
 
-	for c, ip := range ips {
+	//if err != nil {
+	//	log.Printf("Error looking up hosts")
+	//	return
+	//}
 
-		if !peerSet[ip.String()] && !myIps[ip.String()] {
-			log.Printf("%v %v", c, ip)
+	for _, ip := range ips {
 
-			peerSet[ip.String()] = true
-			peers = append(peers, ip)
+		if !peerSet[ip] && !myIps[ip] {
+			//log.Printf("%v %v", c, ip)
+
+			peerSet[ip] = true
+			peers = append(peers, net.ParseIP(ip).To4())
 			torrentPeers = append(torrentPeers, torrent.Peer{
-				IP: ip, Port: 6000})
+				IP: net.ParseIP(ip).To4(), Port: 6000})
 		}
 	}
 
