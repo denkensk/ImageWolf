@@ -34,20 +34,20 @@ var myIps = make(map[string]bool)
 var lookupHost string
 
 func main() {
-	lookupHost = os.Getenv("LOOKUP_HOST")
-
-	if lookupHost == "" {
-		lookupHost = "tasks.imagewolf"
-	}
-
-	log.Printf("LOOKUP_HOST set to %s", lookupHost)
+	//lookupHost = os.Getenv("LOOKUP_HOST")
+	//
+	//if lookupHost == "" {
+	//	lookupHost = "tasks.imagewolf"
+	//}
+	//
+	//log.Printf("LOOKUP_HOST set to %s", lookupHost)
 
 	var clientConfig torrent.ClientConfig
 	clientConfig.DataDir = dataDir
 	clientConfig.Seed = true
 	clientConfig.DisableTrackers = true
 	clientConfig.NoDHT = true
-	clientConfig.SetListenAddr("0.0.0.0:6000")
+	//clientConfig.SetListenAddr("0.0.0.0:6000")
 	var err error
 	torrentClient, err = torrent.NewClient(&clientConfig)
 	if err != nil {
