@@ -1,11 +1,3 @@
-FROM golang:1.7 AS build
-
-RUN go get github.com/anacrolix/utp
-RUN go get github.com/anacrolix/torrent/
-RUN go get github.com/docker/distribution/notifications
-COPY src/imagewolf.go /go/src/
-RUN CGO_ENABLED=0 go build -a /go/src/imagewolf.go
-
 FROM alpine:3.5 AS build-docker
 
 ENV DOCKER_VERSION 17.06.0
@@ -22,6 +14,6 @@ RUN tar xvpf docker.tgz
 FROM scratch
 
 ENV PATH "/"
-COPY --from=build /go/imagewolf /imagewolf
+COPY ./src/imagewolf /imagewolf
 COPY --from=build-docker /docker/docker /docker
 CMD ["/imagewolf"]
