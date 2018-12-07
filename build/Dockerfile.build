@@ -1,10 +1,4 @@
-FROM golang:1.10
-
-RUN go get -v github.com/anacrolix/utp
-RUN go get -v github.com/anacrolix/torrent/
-RUN go get -v github.com/docker/distribution/notifications
-
-
+FROM alpine:3.5
 ENV DOCKER_VERSION 17.06.0
 ENV DOCKER_DOWNLOAD_URL https://download.docker.com/linux/static/stable/x86_64/docker-17.06.0-ce.tgz
 ENV DOCKER_DOWNLOAD_SHA e582486c9db0f4229deba9f8517145f8af6c5fae7a1243e6b07876bd3e706620
