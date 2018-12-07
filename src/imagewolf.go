@@ -47,8 +47,7 @@ func main() {
 	clientConfig.Seed = true
 	clientConfig.DisableTrackers = true
 	clientConfig.NoDHT = true
-	clientConfig.ListenHost = func(string) string { return "0.0.0.0" }
-	clientConfig.ListenPort = 6000
+	clientConfig.SetListenAddr("0.0.0.0:6000")
 	var err error
 	torrentClient, err = torrent.NewClient(&clientConfig)
 	if err != nil {
