@@ -47,7 +47,8 @@ func main() {
 	clientConfig.Seed = true
 	clientConfig.DisableTrackers = true
 	clientConfig.NoDHT = true
-	//clientConfig.SetListenAddr("0.0.0.0:6000")
+	clientConfig.DisableIPv6 = true
+	clientConfig.SetListenAddr("0.0.0.0:6000")
 	var err error
 	torrentClient, err = torrent.NewClient(&clientConfig)
 	if err != nil {
