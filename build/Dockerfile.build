@@ -1,6 +1,9 @@
-FROM alpine:3.5 AS build-docker
+FROM golang:1.10
 
-COPY ./src/imagewolf /imagewolf
+RUN go get -v github.com/anacrolix/utp
+RUN go get -v github.com/anacrolix/torrent/
+RUN go get -v github.com/docker/distribution/notifications
+
 
 ENV DOCKER_VERSION 17.06.0
 ENV DOCKER_DOWNLOAD_URL https://download.docker.com/linux/static/stable/x86_64/docker-17.06.0-ce.tgz
@@ -10,5 +13,3 @@ RUN apk --update add ca-certificates wget
 RUN wget -O /docker.tgz "$DOCKER_DOWNLOAD_URL"
 RUN echo "$DOCKER_DOWNLOAD_SHA *docker.tgz" | sha256sum -c -;
 RUN tar xvpf docker.tgz
-RUN mv /docker/docker /docker
-CMD ["/imagewolf"]
